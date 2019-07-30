@@ -1,7 +1,26 @@
 {
-  "name": "Astilectron",
-  "description": "Electron-based cross-language application framework",
-  "devDependencies": {
-    "electron": "1.8.1"
-  }
+	"name": "qfx",
+	"description": "Electron-based cross-language application framework",
+	"scripts": {
+		"pack": "electron-builder --dir",
+		"dist": "electron-builder"
+	},
+	"main": "main.js",
+	"version": "0.0.1",
+	"forceCodeSigning": "false",
+	"build": {
+		"electronVersion": "5.0.0",
+		"mac": {
+			"target": "dir"
+		},
+		"linux": {
+			"target": "dir"
+		},
+		"win": {
+			"target": "dir"
+		}
+	},
+	"devDependencies": {
+		"electron-builder": "^21.0.15"
+	}
 }
