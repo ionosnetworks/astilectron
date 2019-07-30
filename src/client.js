@@ -16,6 +16,8 @@ class Client {
             fs.appendFile(process.env.HOME+"/Library/Caches/com.ionosnetworks.qfx/qfx.log", "Socket Error: "+err, function(e){
                 console.log("Error while writing to file:"+e);
             })
+	    process.exit()
+
         })
 
         this.socket.on('close', function() {
