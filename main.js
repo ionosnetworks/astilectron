@@ -14,7 +14,7 @@ let quittingApp = false;
 
 // Single instance
 let lastWindow = null;
-if (process.argv[3] === "true") {
+if (process.argv[2] === "true") {
     // Lock
     const singlesInstanceLock = app.requestSingleInstanceLock();
     if (!singlesInstanceLock) {
@@ -32,7 +32,7 @@ if (process.argv[3] === "true") {
 }
 
 // Command line switches
-let idx = 4;
+let idx = 3;
 for (let i = idx; i < process.argv.length; i++) {
     let s = process.argv[i].replace(/^[\-]+/g,"");
     let v;
@@ -85,7 +85,10 @@ app.on('ready',() => {
         switch (json.name) {
             // App
             case consts.eventNames.appCmdQuit:
-            app.quit();
+            rl.close()
+            setTimeout(function(){
+                app.quit();
+            }, 100)
             break;
 
             // Dock
