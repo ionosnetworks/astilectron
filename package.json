@@ -9,7 +9,7 @@
 	"version": "0.0.1",
 	"forceCodeSigning": "false",
 	"build": {
-		"electronVersion": "5.0.0",
+		"electronVersion": "5.0.10",
 		"mac": {
 			"target": "dir"
 		},
