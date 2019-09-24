@@ -5,6 +5,12 @@ const {app, BrowserWindow, ipcMain, Menu, MenuItem, Tray, dialog, Notification} 
 const consts = require('./src/consts.js')
 const client = require('./src/client.js').init()
 const rl = require('readline').createInterface({input: client.socket})
+if (process.platform === 'darwin') {
+    const {systemPreferences} = require('electron')
+
+    systemPreferences.setUserDefault('NSDisabledDictationMenuItem', 'boolean', true)
+    systemPreferences.setUserDefault('NSDisabledCharacterPaletteMenuItem', 'boolean', true)
+}
 
 let callbacks = {};
 let counters = {};
