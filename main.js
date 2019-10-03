@@ -2,6 +2,23 @@
 
 const electron = require('electron')
 const {app, BrowserWindow, ipcMain, Menu, MenuItem, Tray, dialog, Notification} = electron
+
+// Single instance of the app
+let lastWindow = null;
+// Lock
+const singlesInstanceLock = app.requestSingleInstanceLock();
+if (!singlesInstanceLock) {
+    app.quit();
+    return;
+}
+// Someone tried to run a second instance, we should focus our window.
+app.on('second-instance', (event, commandLine, workingDirectory) => {
+    if (lastWindow) {
+        if (lastWindow.isMinimized()) lastWindow.restore();
+        lastWindow.show();
+    }
+});
+
 const consts = require('./src/consts.js')
 const client = require('./src/client.js').init()
 const rl = require('readline').createInterface({input: client.socket})
@@ -17,25 +34,6 @@ let counters = {};
 let elements = {};
 let menus = {};
 let quittingApp = false;
-
-// Single instance
-let lastWindow = null;
-if (process.argv[2] === "true") {
-    // Lock
-    const singlesInstanceLock = app.requestSingleInstanceLock();
-    if (!singlesInstanceLock) {
-        app.quit();
-        return;
-    }
-
-    // Someone tried to run a second instance, we should focus our window.
-    app.on('second-instance', (event, commandLine, workingDirectory) => {
-        if (lastWindow) {
-            if (lastWindow.isMinimized()) lastWindow.restore();
-            lastWindow.show();
-        }
-    });
-}
 
 // Command line switches
 let idx = 3;
